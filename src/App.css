@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+.grid-board-small {
+  display: grid;
+  grid-template-columns: repeat(15, var(--tile-size));
+  grid-gap: 0;
+  align-self: center;
+}
+
+.grid-board-big {
+  display: grid;
+  grid-template-columns: repeat(30, var(--tile-size));
+  grid-gap: 0;
+  align-self: center;
+}
+
+/* .grid-board-big {
+  display: grid;
+  grid-template-columns: repeat(30, var(--tile-size));
+  grid-gap: 0;
+  align-self: center;
+} */
