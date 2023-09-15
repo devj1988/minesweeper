@@ -1,5 +1,5 @@
-import { useCallback, useState, ReactElement, useMemo } from "react";
-import {Box} from "./Box";
+import { useCallback, useState, ReactElement } from "react";
+import { Box } from "./Box";
 
 // export interface GridProps {
 //     size: "big" | "small";
@@ -96,6 +96,28 @@ const initializeState = (rows: number, cols: number) => {
     return initState;
 }
 
+const noHiddenRemaining = (grid: string[][], minesCount: number) => {
+    let hidden = 0;
+    const rows = grid.length;
+    const cols = grid[0].length;
+    for (let i=0; i< rows; i++) {
+        for (let j=0; j< cols;j++) {
+            if (grid[i][j] === "H") {
+                hidden++;
+            }
+        }
+    }
+    return hidden === minesCount;
+}
+
+const showAllMines = (grid: string[][], minesSet: Set<string>) => {
+    minesSet.forEach(mine => {
+        const [x, y] = mine.split(",").map(a=>Number(a));
+        grid[x][y] = "M";
+    })
+    
+}
+
 type GameSize = 'small' | 'big';
 
 export function Grid() {
@@ -104,6 +126,8 @@ export function Grid() {
     const [gridState, setGridState] = useState(() => initializeState(rows, cols));
     const [gameOver, setGameOver] = useState(false);
     const [minesSet, setMinesSet] = useState(() => getRandomMines(mines, rows, cols));
+    const [victory, setVictory] = useState(false);
+
 
     const grid: ReactElement[][] = []
     for (let row = 0; row < rows; row ++) {
@@ -121,6 +145,7 @@ export function Grid() {
         const {mines, rows, cols} = sizes[size];
         setGridState(initializeState(rows, cols));
         setMinesSet(getRandomMines(mines, rows, cols));
+        setVictory(false);
     }
 
     const reveal = useCallback((i: number, j: number) => {
@@ -135,6 +160,11 @@ export function Grid() {
             const newGrid = doReveal(gridState, i, j, minesSet);
             if (gridState[i][j] === "M") {
                 setGameOver(true);
+                setVictory(false);
+            } else if (noHiddenRemaining(newGrid, mines)) {
+                showAllMines(newGrid, minesSet);
+                setGameOver(true);
+                setVictory(true);
             }
             setGridState(newGrid);
          }
@@ -150,6 +180,11 @@ export function Grid() {
             <br/>
             <div className={gridClass}>
                 {grid}
+            </div>
+            <div style={{marginTop:"10px"}}>
+                {gameOver ? (victory === true? "You win!" : "You lose!")
+                    : "Good luck!"   
+                }
             </div>
         </>
     );
