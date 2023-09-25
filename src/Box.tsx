@@ -6,20 +6,18 @@ export interface BoxProps {
 }
 
 export function Box(props: BoxProps) {
-    let classes = props.value === "H"?  `grid-square-hide` : "grid-square-show";
-    classes = props.value === "M"?  `grid-square-mine` : classes;
-    let content;
+    let classes = "grid-square-show";
+    let content: any = props.value;
+
     if (props.value === "M") {
         content = (<img src={mineImg}/>);
+        classes = "grid-square-mine";
     } else if (props.value === "H") {
         content = "";
-    } else { 
-        content = props.value;
+        classes = "grid-square-hide";
     }
 
     return <div className={classes} style={{width: 20, height: 20, fontSize: "15px"}} onClick={props.onClick}>
-        {/* {props.value !== "H" ? props.value : ""}
-        {props.value === "M" ? <img src="./pngegg.png"/>: ""} */}
         {content}
         </div>
 }

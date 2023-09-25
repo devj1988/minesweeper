@@ -1,10 +1,6 @@
 import { useCallback, useState, ReactElement } from "react";
 import { Box } from "./Box";
 
-// export interface GridProps {
-//     size: "big" | "small";
-// }
-
 const sizes = {
     "small": {
         rows: 15,
@@ -37,25 +33,30 @@ const countMines = (grid: string[][], i: number, j: number, mines: Set<string>):
 }
 
 const doReveal = (grid: string[][], i: number, j: number, minesSet: Set<string>) => {
-    let q = [[i, j]];
-    const seen: Set<string> = new Set();
-    while (q.length > 0) {
-        const newq: any[] = [];
-        q.forEach(pt => {
-            const [x, y] = pt;
-            if (!seen.has(`${x},${y}`)) {
-                seen.add(`${x},${y}`);
-                const {count, neighborsList} = countMines(grid, x, y, minesSet);
-                grid[x][y] = count === 0 ? "" : `${count}`;
-                neighborsList.forEach (neighb => {
-                    const [u,v] = neighb;
-                    if (!seen.has(`${u},${v}`)) {
-                        newq.push(neighb);
-                    }
-                })
-            }
-        })
-        q = newq;
+    const {count, neighborsList} =  countMines(grid, i, j, minesSet)
+    if (count > 0) {
+        grid[i][j] = "";
+    } else {
+        let q = [[i, j]];
+        const seen: Set<string> = new Set();
+        while (q.length > 0) {
+            const newq: any[] = [];
+            q.forEach(pt => {
+                const [x, y] = pt;
+                if (!seen.has(`${x},${y}`)) {
+                    seen.add(`${x},${y}`);
+                    const {count, neighborsList} = countMines(grid, x, y, minesSet);
+                    grid[x][y] = count === 0 ? "" : `${count}`;
+                    neighborsList.forEach (neighb => {
+                        const [u,v] = neighb;
+                        if (!seen.has(`${u},${v}`)) {
+                            newq.push(neighb);
+                        }
+                    })
+                }
+            })
+            q = newq;
+        }
     }
     
     return copyGrid(grid);
@@ -80,7 +81,6 @@ const getRandomMines = (mines: number, rows: number, cols: number): Set<string> 
         const n = Math.floor(Math.random() * cols);
         ret.push(`${m},${n}`);
     }
-    console.log(ret)
     return new Set(ret);
 }
 

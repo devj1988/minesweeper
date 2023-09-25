@@ -65,7 +65,7 @@ code {
   border-style: solid;
   width: var(--tile-size);
   height: var(--tile-size);
-  border-width: 2;
+  border-width: 2px;
   border-left-color: var(--border-left-color);
   border-top-color: var(--border-top-color);
   border-right-color: var(--border-right-color);
@@ -77,7 +77,7 @@ code {
   border-style: solid;
   width: var(--tile-size);
   height: var(--tile-size);
-  border-width: 2;
+  border-width: 2px;
   border-left-color: var(--border-left-color);
   border-top-color: var(--border-top-color);
   border-right-color: var(--border-right-color);
