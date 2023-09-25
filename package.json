@@ -2,7 +2,7 @@
   "name": "minesweeper",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://devj1988.github.io/minesweeper",
+  "homepage": "https://devj1988.github.io/minesweeper",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
