@@ -81,7 +81,6 @@ const getRandomMines = (mines: number, rows: number, cols: number): Set<string> 
         const n = Math.floor(Math.random() * cols);
         ret.push(`${m},${n}`);
     }
-    console.log(ret)
     return new Set(ret);
 }
 
