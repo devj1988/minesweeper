@@ -1,5 +1,7 @@
 import { useCallback, useState, ReactElement } from "react";
 import { Box } from "./Box";
+import Button from 'react-bootstrap/Button';
+
 
 const sizes = {
     "small": {
@@ -135,7 +137,6 @@ export function Grid() {
         grid.push(gridrow)
         for (let col = 0; col < cols; col ++) {
             grid[row].push(<Box value={gridState[row][col]} onClick={() => reveal(row, col)}/>)
-            // grid[row].push(<div className={"grid-square"}>{gridState[row][col]}</div>)
         }
     }
 
@@ -172,19 +173,13 @@ export function Grid() {
 
     return (
         <>
-            <span>
-                <button className="button-size" onClick={()=>reset('small')}>small</button>
-                <span style={{width: "20px"}}/>
-                <button className="button-size" onClick={()=>reset('big')}>big</button>
-            </span>
+            <div style={{display: "flex"}}>
+                <Button style={{width: "100px", marginRight: "10px"}} variant="primary" onClick={()=>reset('small')}>Small</Button>
+                <Button style={{width: "100px"}} variant="primary" onClick={()=>reset('big')}>Big</Button>
+            </div>
             <br/>
             <div className={gridClass}>
                 {grid}
-            </div>
-            <div style={{marginTop:"10px"}}>
-                {gameOver ? (victory === true? "You win!" : "You lose!")
-                    : "Good luck!"   
-                }
             </div>
         </>
     );

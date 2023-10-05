@@ -17,7 +17,7 @@ export function Box(props: BoxProps) {
         classes = "grid-square-hide";
     }
 
-    return <div className={classes} style={{width: 20, height: 20, fontSize: "15px"}} onClick={props.onClick}>
+    return <div className={classes} style={{width: 20, height: 20, fontSize: "10px"}} onClick={props.onClick}>
         {content}
         </div>
 }
