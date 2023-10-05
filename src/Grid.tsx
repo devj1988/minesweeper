@@ -33,9 +33,9 @@ const countMines = (grid: string[][], i: number, j: number, mines: Set<string>):
 }
 
 const doReveal = (grid: string[][], i: number, j: number, minesSet: Set<string>) => {
-    const {count, neighborsList} =  countMines(grid, i, j, minesSet)
+    const {count} =  countMines(grid, i, j, minesSet)
     if (count > 0) {
-        grid[i][j] = "";
+        grid[i][j] = `${count}`;
     } else {
         let q = [[i, j]];
         const seen: Set<string> = new Set();
