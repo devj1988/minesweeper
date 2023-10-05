@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1><Badge bg="success">Minesweeper</Badge></h1>
-        <Badge bg="secondary" style={{marginTop: "10px", marginBottom: "10px"}}>Click any button to reset</Badge>
+        <Badge bg="secondary" style={{marginTop: "10px", marginBottom: "30px"}}>Click any button to reset</Badge>
         <Grid></Grid>
       </header>
     </div>
