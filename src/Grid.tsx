@@ -1,7 +1,8 @@
 import { useCallback, useState, ReactElement } from "react";
 import { Box } from "./Box";
 import Button from 'react-bootstrap/Button';
-
+import useSound from 'use-sound';
+import mineExploded from './mine-exploded.mp3';
 
 const sizes = {
     "small": {
@@ -128,7 +129,7 @@ export function Grid() {
     const [gridState, setGridState] = useState(() => initializeState(rows, cols));
     const [gameOver, setGameOver] = useState(false);
     const [minesSet, setMinesSet] = useState(() => getRandomMines(mines, rows, cols));
-    const [victory, setVictory] = useState(false);
+    const [playMineExploded] = useSound(mineExploded);
 
 
     const grid: ReactElement[][] = []
@@ -146,7 +147,6 @@ export function Grid() {
         const {mines, rows, cols} = sizes[size];
         setGridState(initializeState(rows, cols));
         setMinesSet(getRandomMines(mines, rows, cols));
-        setVictory(false);
     }
 
     const reveal = useCallback((i: number, j: number) => {
@@ -156,16 +156,16 @@ export function Grid() {
         if (minesSet.has(`${i},${j}`)) {
             gridState[i][j] = "M";
             setGameOver(true);
+            playMineExploded();
             setGridState(copyGrid(gridState));
         } else {
             const newGrid = doReveal(gridState, i, j, minesSet);
             if (gridState[i][j] === "M") {
                 setGameOver(true);
-                setVictory(false);
+                playMineExploded();
             } else if (noHiddenRemaining(newGrid, mines)) {
                 showAllMines(newGrid, minesSet);
                 setGameOver(true);
-                setVictory(true);
             }
             setGridState(newGrid);
          }
